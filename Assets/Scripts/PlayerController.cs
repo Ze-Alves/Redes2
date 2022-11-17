@@ -9,7 +9,9 @@ public class PlayerController : MonoBehaviour
 
     public float moveSpeed;
     float xInput, yInput;
-    Rigidbody rigidbody;
+    new Rigidbody rigidbody;
+    int Score;
+    public GameObject winText;
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
@@ -28,5 +30,18 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         rigidbody.AddForce( xInput * moveSpeed,0,yInput*moveSpeed);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Coin")
+        {
+            Score++;
+            other.gameObject.SetActive(false);
+            
+        }
+        if (Score > 1)
+            winText.SetActive(true);
+
     }
 }
